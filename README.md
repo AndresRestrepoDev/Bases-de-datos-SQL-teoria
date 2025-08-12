@@ -1,23 +1,106 @@
 # Bases-de-datos-SQL-teoria
 
-📚 Guía de Referencia Rápida: Bases de Datos SQL¡Bienvenido a esta guía completa sobre Bases de Datos Relacionales y SQL! Este documento te servirá como una referencia rápida para entender los conceptos clave y los comandos más importantes.💻 SQL (Structured Query Language)SQL es el lenguaje estándar para gestionar bases de datos relacionales. Te permite manipular, consultar y definir la estructura de los datos, así como gestionar permisos de acceso.⚙️ Ejemplos de Motores de Bases de DatosMotorCaracterísticasUso IdealMySQLOpen source, muy popular y de alto rendimiento.Aplicaciones web, CMS.PostgreSQLMuy robusto, compatible con estándares ANSI, con soporte avanzado.Sistemas de misión crítica, análisis de datos complejos.SQLiteLigero, sin servidor, embebido en la aplicación.Aplicaciones móviles, archivos de configuración.MariaDBFork de MySQL con mejoras de rendimiento.Reemplazo directo para MySQL.🛠️ Gestores de Bases de DatosHerramientas para administrar bases de datos con una interfaz gráfica:DBeaver: Multiplataforma y soporta una amplia variedad de motores.SQL Workbench/J: Ligero, basado en Java, excelente para scripting.📖 Categorías de Comandos SQLLos comandos se dividen en categorías según su función:DDL (Data Definition Language): Para definir la estructura de la base de datos.CREATE, ALTER, DROP, TRUNCATE
-DML (Data Manipulation Language): Para manipular los datos.SELECT, INSERT, UPDATE, DELETE
-DCL (Data Control Language): Para controlar permisos.GRANT, REVOKE
-TCL (Transaction Control Language): Para controlar transacciones.COMMIT, ROLLBACK, SAVEPOINT
-Comandos adicionales:SHOW, DESCRIBE, USE
-🔒 Restricciones (Constraints)Las restricciones garantizan la integridad de los datos en las tablas:PRIMARY KEY: Identificador único de filas.FOREIGN KEY: Referencia a otra tabla.UNIQUE: Los valores en la columna deben ser únicos.NOT NULL: La columna no puede tener valores nulos.CHECK: Restricción condicional que debe cumplirse.DEFAULT: Valor por defecto para la columna.📋 Ejemplos de Sentencias SQL📊 Cláusula de ordenamiento (ORDER BY)Ordena los resultados en forma ascendente (ASC) o descendente (DESC).SELECT * FROM clients ORDER BY name ASC;
-🧩 Operadores condicionales=, <, >, <=, >=, <>, !=, BETWEEN, LIKE, IN, IS NULL
-📈 Cláusulas de agrupación y filtro (GROUP BY, HAVING)GROUP BY agrupa filas para funciones agregadas; HAVING filtra los grupos.SELECT genre, COUNT(*) FROM clients GROUP BY genre HAVING COUNT(*) > 1;
-➡️ Cláusula de límite (LIMIT / OFFSET)Limita la cantidad de resultados devueltos.-- Ejemplo MySQL
+Bases de datos SQL
+=================
+
+SQL
+---
+
+SQL (Structured Query Language) es el lenguaje estándar para gestionar bases de datos relacionales. Permite crear, consultar, actualizar y borrar datos, así como definir estructuras y permisos.
+
+Motores ejemplos
+----------------
+
+- MySQL: Muy usado, open source, ideal para web.
+- PostgreSQL: Robusto, estándar ANSI, soporte avanzado.
+- SQLite: Ligero, embebido, ideal para apps pequeñas.
+- MariaDB: Fork de MySQL con mejoras.
+
+Gestores de base de datos
+-------------------------
+
+Herramientas para administrar bases de datos con interfaz gráfica o consola:
+
+- DBeaver: Multiplataforma, soporta muchos motores.
+- SQL Workbench/J: Ligero, en Java, ideal para scripting.
+
+Categorías de comandos SQL
+==========================
+
+1. DDL (Data Definition Language): Definen estructuras.
+   - CREATE, ALTER, DROP, TRUNCATE
+2. DML (Data Manipulation Language): Manipulan datos.
+   - SELECT, INSERT, UPDATE, DELETE
+3. DCL (Data Control Language): Controlan permisos.
+   - GRANT, REVOKE
+4. TCL (Transaction Control Language): Control de transacciones.
+   - COMMIT, ROLLBACK, SAVEPOINT
+5. TCL (Task Control Language) o comandos adicionales
+   - SHOW, DESCRIBE, USE
+
+Restricciones o constraints
+===========================
+
+- PRIMARY KEY: Identificador único de filas.
+- FOREIGN KEY: Referencia a otra tabla.
+- UNIQUE: Valores únicos en columna.
+- NOT NULL: No permite valores NULL.
+- CHECK: Restricción condicional.
+- DEFAULT: Valor por defecto.
+
+Tipos de sentencias
+===================
+
+Cláusula de ordenamiento (ORDER BY)
+-----------------------------------
+Ordena resultados ascendente (ASC) o descendente (DESC).
+
+Ejemplo:
+SELECT * FROM clients ORDER BY name ASC;
+
+Operadores condicionales
+------------------------
+=, <, >, <=, >=, <>, !=, BETWEEN, LIKE, IN, IS NULL
+
+Cláusulas de agrupación y filtro (GROUP BY, HAVING)
+---------------------------------------------------
+Agrupa filas para funciones agregadas; HAVING filtra grupos.
+
+Ejemplo:
+SELECT genre, COUNT(*) FROM clients GROUP BY genre HAVING COUNT(*) > 1;
+
+Cláusula de límite (LIMIT / OFFSET)
+-----------------------------------
+Limita la cantidad de resultados.
+
+Ejemplo MySQL:
 SELECT * FROM clients LIMIT 5 OFFSET 10;
-🏗️ Creación y ManipulaciónCrear una base de datos-- MySQL y PostgreSQL
+
+Ejemplo PostgreSQL (igual sintaxis):
+
+Cómo crear una base de datos
+============================
+
+MySQL y PostgreSQL:
+
 CREATE DATABASE nombre_base;
-Usar una base de datos-- MySQL
+
+Cómo usar una base de datos (USE)
+=================================
+
+MySQL:
+
 USE nombre_base;
 
--- PostgreSQL (se usa un comando de la consola)
+PostgreSQL:
+No usa USE; se conecta directamente a la base deseada:
+
 \c nombre_base
-Crear una tablaCREATE TABLE clients (
+
+Cómo crear una tabla
+====================
+
+CREATE TABLE clients (
   id INT PRIMARY KEY AUTO_INCREMENT, -- SERIAL en PostgreSQL
   name VARCHAR(100) NOT NULL,
   email VARCHAR(100) UNIQUE,
@@ -27,37 +110,128 @@ Crear una tablaCREATE TABLE clients (
   genre VARCHAR(50)
 );
 
--- Sintaxis para PostgreSQL
+En PostgreSQL se usa SERIAL para auto-incrementar:
+
 id SERIAL PRIMARY KEY
-Crear claves foráneas y referenciarlasALTER TABLE orders
+
+Cómo crear claves foráneas y referenciarlas
+===========================================
+
+ALTER TABLE orders
 ADD CONSTRAINT fk_client
 FOREIGN KEY (client_id) REFERENCES clients(id);
-Insertar datosINSERT INTO clients (name, email, password, phone, address, genre)
+
+Cómo insertar datos
+===================
+
+INSERT INTO clients (name, email, password, phone, address, genre)
 VALUES ('Andres', 'andres@correo.com', '1234', '123456789', 'Calle 1', 'Masculino');
-🔎 Consultas y RelacionesConsultas con SELECTSELECT * FROM clients;
-Filtros y condicionesSELECT * FROM clients WHERE genre = 'Masculino' AND phone IS NOT NULL;
-JOINSCombina filas de dos o más tablas en una sola consulta.INNER JOIN: Devuelve filas que coinciden en ambas tablas.SELECT orders.id, clients.name
+
+Consultas con SELECT
+====================
+
+SELECT * FROM clients;
+
+Filtros y condiciones
+=====================
+
+SELECT * FROM clients WHERE genre = 'Masculino' AND phone IS NOT NULL;
+
+JOINS
+=====
+
+INNER JOIN: Devuelve filas que coinciden en ambas tablas.
+
+Ejemplo:
+SELECT orders.id, clients.name
 FROM orders
 INNER JOIN clients ON orders.client_id = clients.id;
-LEFT JOIN: Devuelve todas las filas de la tabla de la izquierda y las coincidentes de la derecha.SubconsultasSELECT * FROM clients WHERE id IN (SELECT client_id FROM orders WHERE total > 100);
-ALTER TABLEPara modificar la estructura de una tabla existente.ALTER TABLE clients ADD COLUMN birthdate DATE;
-Funciones agregadasFunciones que operan sobre un conjunto de filas (COUNT(), SUM(), AVG(), MAX(), MIN()).SELECT genre, COUNT(*) FROM clients GROUP BY genre;
-🧩 Herramientas y DiferenciasTriggersEjecutan un procedimiento almacenado en respuesta a un evento (INSERT, UPDATE, DELETE).-- Ejemplo básico en MySQL
+
+LEFT JOIN: Devuelve todas las filas de la izquierda y las coincidentes de la derecha.
+
+Subconsultas
+============
+
+SELECT * FROM clients WHERE id IN (SELECT client_id FROM orders WHERE total > 100);
+
+ALTER TABLE
+===========
+
+ALTER TABLE clients ADD COLUMN birthdate DATE;
+
+Claves y restricciones
+======================
+
+CREATE TABLE example (
+  id INT PRIMARY KEY,
+  name VARCHAR(50) UNIQUE NOT NULL,
+  age INT CHECK (age > 0)
+);
+
+Funciones agregadas
+==================
+
+COUNT(), SUM(), AVG(), MAX(), MIN()
+
+Ejemplo:
+SELECT genre, COUNT(*) FROM clients GROUP BY genre;
+
+Triggers
+========
+
+Ejemplo básico MySQL:
+
 CREATE TRIGGER before_insert_client
 BEFORE INSERT ON clients
 FOR EACH ROW
 BEGIN
-    SET NEW.name = UPPER(NEW.name);
+  SET NEW.name = UPPER(NEW.name);
 END;
-Control de acceso y transaccionesGRANT SELECT, INSERT ON lovelace.* TO 'user'@'localhost';
+
+Control de acceso y transacciones
+=================================
+
+GRANT SELECT, INSERT ON lovelace.* TO 'user'@'localhost';
 
 START TRANSACTION;
 -- sentencias
 COMMIT;
 ROLLBACK;
-VistasUna vista es una tabla virtual basada en el resultado de una consulta.CREATE VIEW client_emails AS
+
+Vistas
+======
+
+CREATE VIEW client_emails AS
 SELECT name, email FROM clients;
-Diferencias específicas entre MySQL y PostgreSQLAuto-incremento: MySQL usa AUTO_INCREMENT, mientras que PostgreSQL usa SERIAL.Sintaxis: PostgreSQL usa \c para conectar a bases de datos, mientras que MySQL usa USE.Tipos de datos: PostgreSQL es más estricto con los tipos y tiene más funciones avanzadas.DependenciasLibrerías o paquetes necesarios para conectar a bases de datos desde un lenguaje de programación.MotorPythonJavaScript (Node.js)MySQLmysql-connector-python, pymysqlmysql2, sequelizePostgreSQLpsycopg2, SQLAlchemypg, sequelizeComandos útiles en consolaSHOW DATABASES;
+
+Diferencias específicas MySQL y PostgreSQL
+==========================================
+
+- MySQL usa AUTO_INCREMENT, PostgreSQL SERIAL.
+- PostgreSQL es más estricto con tipos y tiene más funciones avanzadas.
+- PostgreSQL usa \c para conectar a bases, MySQL usa USE.
+- PostgreSQL soporta JSONB, MySQL JSON.
+
+Qué son las dependencias
+========================
+
+Son librerías o paquetes necesarios para conectar y manipular bases de datos desde lenguajes como Python o JavaScript.
+
+Dependencias para usar bases de datos en Python y JS
+====================================================
+
+MySQL:
+- Python: mysql-connector-python, pymysql, SQLAlchemy
+- JS: mysql2, sequelize
+
+PostgreSQL:
+- Python: psycopg2, SQLAlchemy
+- JS: pg, sequelize
+
+Comandos útiles en consola
+==========================
+
+SHOW DATABASES;
 SHOW TABLES;
 DESCRIBE clients;
 SELECT DATABASE();
